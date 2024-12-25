@@ -14,10 +14,10 @@ def scrape_website(url, context):
     asin = url.split("/")[-1]
     page = context.new_page()
     page.goto(url)
-    page.screenshot(path="1.png", full_page=True)
+    # page.screenshot(path="1.png", full_page=True)
 
-    with open("1.html", "w", encoding="utf-8") as file:
-        file.write(page.content())
+    # with open("1.html", "w", encoding="utf-8") as file:
+    #     file.write(page.content())
 
     try:
         ships = get_ships_from(page)
