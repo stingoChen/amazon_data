@@ -1,13 +1,13 @@
 import time
 
+import pandas as pd
 from playwright.sync_api import sync_playwright
 from tqdm import tqdm
 from utils.get_brand import get_brand_name
 from utils.get_info import get_product_review_stars, get_ranks, get_ships_from
 from utils.price2pay import get_coupon, get_price_today
-from configs import ItemInfo
 
-import pandas as pd
+from configs import ItemInfo
 
 
 def scrape_website(url, context):
@@ -22,6 +22,7 @@ def scrape_website(url, context):
     try:
         ships = get_ships_from(page)
         brand_name = get_brand_name(page)
+        # TODO using Xpath to find datas
         today_price, typical_price, discount_percentage = get_price_today(page)
         coupon = get_coupon(page)
         customer_review_text, stars = get_product_review_stars(page)
