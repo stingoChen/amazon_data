@@ -14,6 +14,11 @@ def scrape_website(url, context):
     asin = url.split("/")[-1]
     page = context.new_page()
     page.goto(url)
+    page.screenshot(path="1.png", full_page=True)
+
+    with open("1.html", "w", encoding="utf-8") as file:
+        file.write(page.content())
+
     try:
         ships = get_ships_from(page)
         brand_name = get_brand_name(page)
@@ -30,7 +35,7 @@ def scrape_website(url, context):
 
 if __name__ == '__main__':
 
-    with open("/Users/zcy/git/amazon_data/src/test.txt", "r") as f:
+    with open("/Users/zcy/git/amazon_data/src/test1.txt", "r") as f:
         datas = f.readlines()
         datas = [_.strip() for _ in datas]
 
@@ -39,7 +44,9 @@ if __name__ == '__main__':
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         browser_context = browser.new_context(
-            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.37",
+            locale = "en-US",
+            timezone_id = "America/New_York"
         )
         for idx, _ in tqdm(enumerate(datas), total=len(datas)):
             r = scrape_website(_, browser_context)
@@ -54,4 +61,4 @@ if __name__ == '__main__':
 
     df = pd.DataFrame(df)
 
-    df.to_excel("1.xlsx", index=False)
+    df.to_excel("2024-12-25.xlsx", index=False)

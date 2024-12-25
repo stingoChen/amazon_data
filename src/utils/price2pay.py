@@ -5,8 +5,8 @@ def get_price_today(page) -> tuple:
     apex_desktop = page.locator("#corePriceDisplay_desktop_feature_div")
     try:
         x = apex_desktop.locator(".a-price.aok-align-center.reinventPricePriceToPayMargin.priceToPay")
-        price_whole = x.locator(".a-price-whole").first.text_content().strip()
-        price_fraction = x.locator(".a-price-fraction").first.text_content().strip()
+        price_whole = x.locator(".a-price-whole").first.text_content(timeout=1000).strip()
+        price_fraction = x.locator(".a-price-fraction").first.text_content(timeout=1000).strip()
         today_price = float(f"{price_whole}{price_fraction}")
     except Exception as e:
         today_price = 0
@@ -18,8 +18,13 @@ def get_price_today(page) -> tuple:
         typical_price = 0
 
     try:
-        z = apex_desktop.locator(".a-size-large.a-color-price.savingPriceOverride.aok-align-center.reinventPriceSavingsPercentageMargin.savingsPercentage")
-        discount_percentage = z.first.text_content(timeout=1000).strip()
+        is_deal = page.locator('//*[@id="dealBadge_feature_div"]')
+        is_deal = is_deal.first.text_content(timeout=1000).strip()
+        if is_deal:
+            z = apex_desktop.locator(".a-size-large.a-color-price.savingPriceOverride.aok-align-center.reinventPriceSavingsPercentageMargin.savingsPercentage")
+            discount_percentage = z.first.text_content(timeout=1000).strip()
+        else:
+            discount_percentage = 0
     except Exception as e:
         discount_percentage = 0
 
@@ -27,6 +32,7 @@ def get_price_today(page) -> tuple:
 
 
 def get_coupon(page):
+    # //*[@id="bundle-card-B0CPDXLSS6"]/div/div[3]
     coupon_data = page.locator("#promoPriceBlockMessage_feature_div")
     try:
         coupon = coupon_data.locator('label[id*="couponTextpctch"]').first.text_content(timeout=1000).strip()
