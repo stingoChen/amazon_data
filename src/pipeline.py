@@ -3,18 +3,18 @@ import time
 import pandas as pd
 from playwright.sync_api import sync_playwright
 from tqdm import tqdm
-from utils.get_brand import get_brand_name
-from utils.get_info import get_product_review_stars, get_ranks, get_ships_from
-from utils.price2pay import get_coupon, get_price_today
+from .utils.get_brand import get_brand_name
+from .utils.get_info import get_product_review_stars, get_ranks, get_ships_from
+from .utils.price2pay import get_coupon, get_price_today
 
-from configs import ItemInfo
+from .configs import ItemInfo
 
 
 def scrape_website(url, context):
     asin = url.split("/")[-1]
     page = context.new_page()
     page.goto(url)
-    # page.screenshot(path="1.png", full_page=True)
+    page.screenshot(path="1.png", full_page=True)
 
     # with open("1.html", "w", encoding="utf-8") as file:
     #     file.write(page.content())

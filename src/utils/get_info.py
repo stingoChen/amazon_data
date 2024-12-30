@@ -83,7 +83,7 @@ def get_ships_from(page):
         ships_data = ships.text_content(timeout=1000)
 
         if ships_data:
-            if ships_data.lower() == "amazon":
+            if "amazon" in ships_data.lower():
                 return "FBA"
             else:
                 return "FBM"

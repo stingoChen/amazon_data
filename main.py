@@ -17,10 +17,12 @@ if __name__ == '__main__':
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         browser_context = browser.new_context(
-            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.37",
-            locale = "en-US",
-            timezone_id = "America/New_York"
+            storage_state="/Users/zcy/git/amazon_data/test/state.json",
+            # user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+            # locale = "en-US",
+            # timezone_id = "America/New_York"
         )
+
         for idx, _ in tqdm(enumerate(datas), total=len(datas)):
             r = scrape_website(_, browser_context)
 
